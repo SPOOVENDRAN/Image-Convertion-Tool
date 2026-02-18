@@ -8,26 +8,34 @@ function Mainpage(){
     let [format , setFormat] = useState('png');
     let [initialName , setInitialName] = useState('Panda.jpg')
 
+    function formatChecker(format){
+        let initialFormat = initialName.split('.')[1].toUpperCase();
+        if(format === initialFormat) {
+            alert("Same Format Cant be Converted");
+            return;
+        }
+    }
+
     function handleFile(file){
         if(!file.type.startsWith('image/')){
             alert("Please upload image format contents")
             return;
         }
-        if(!(Math.round((file.size) / 1000000),2) < 10.0){
-            console.log((Math.round((file.size) / 1000000),2) < 10.0)
-            alert("Please upload file size below 10MB")
-            return;
-        }
         if(file){
-            setInitialName(file.name);
-            let imgurl = URL.createObjectURL(file);
-            setImage(imgurl);
+            if(Math.round((file.size) / 1000000) < 10.0){
+                setInitialName(file.name);
+                let imgurl = URL.createObjectURL(file);
+                setImage(imgurl);
+            }
+            else{
+                alert("Please upload file size below 10MB")
+                return;
+            }
         }
     }
 
     function handleImg(event){
         let file = event.target.files[0];
-        console.log(file)
         handleFile(file);
     }
 
@@ -84,12 +92,12 @@ function Mainpage(){
                         <p className="initial-format">{initialName?.split('.').pop()?.toUpperCase()}</p>
 
                         <span className="arrow">↓</span>
-                        <select value={format}onChange={(e) => setFormat(e.target.value)}className="inner-drop">
+                        <select value={format} onChange={(e) => setFormat(e.target.value)}className="inner-drop">
                             <option value="PNG">PNG</option>
                             <option value="ICO">ICO</option>
                             <option value="JPG">JPG</option>
                         </select>
-                        <button type="button"  className='convert-btn'>Covert</button>
+                        <button type="button"  className='convert-btn' onClick={() => formatChecker(format)}>Covert</button>
                     </div>
 
                     <div className="right-section">
