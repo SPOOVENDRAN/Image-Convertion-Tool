@@ -2,7 +2,7 @@ import './Mainpage.css'
 import uploadpic from '../assets/uploadpic.png'
 import { useState } from 'react';
 
-function Mainpage(){
+function Mainpage({details,dataTrans}){
     let [image , setImage] = useState(null);
     let [isDragging , setIsDragging] = useState(false);
     let [format , setFormat] = useState('png');
@@ -97,7 +97,10 @@ function Mainpage(){
                             <option value="ICO">ICO</option>
                             <option value="JPG">JPG</option>
                         </select>
-                        <button type="button"  className='convert-btn' onClick={() => formatChecker(format)}>Covert</button>
+                        <button type="button"  className='convert-btn' onClick={() => {
+                            formatChecker(format)
+                            dataTrans()
+                        }}>Covert</button>
                     </div>
 
                     <div className="right-section">
@@ -105,9 +108,15 @@ function Mainpage(){
                     </div>
                 </div>
 
-
             </div>
-            
+
+            <div>
+                {console.log(details)}
+                <p>{details.name}</p>
+                <p>{details.role}</p>
+                <p>{details.presentDays}</p>
+            </div>
+
         </div>
     )
 }
