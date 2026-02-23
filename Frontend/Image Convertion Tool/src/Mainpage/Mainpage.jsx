@@ -111,10 +111,9 @@ function Mainpage({details,dataTrans}){
             </div>
 
             <div>
-                {console.log(details)}
                 <p>{details.name}</p>
-                <p>{details.role}</p>
-                <p>{details.presentDays}</p>
+                <p>{details.designation}</p>
+                <p>{details.experience}</p>
             </div>
 
         </div>

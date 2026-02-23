@@ -5,7 +5,7 @@ import MainpageData from "./Mainpage/MainpageData.jsx";
 
 let router = createBrowserRouter([
     {
-      path:"/",
+      path:"/:empId",
       element:<MainpageData/>
     }
 ]);
