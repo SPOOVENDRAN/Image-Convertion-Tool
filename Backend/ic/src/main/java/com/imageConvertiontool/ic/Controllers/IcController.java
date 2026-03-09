@@ -4,10 +4,12 @@ import com.imageConvertiontool.ic.Service.IcService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.function.ServerRequest;
+
+import java.io.File;
+import java.io.IOException;
 
 @RestController
 @CrossOrigin("*")
@@ -15,8 +17,13 @@ public class IcController {
     @Autowired
     IcService icService;
 
-    @GetMapping("/in")
-    public ResponseEntity<?> send(@RequestParam("empid") String empid){
-        return new ResponseEntity<>(icService.getName(empid), HttpStatus.OK);
+    byte[] imgfile ;
+    String contentType;
+    @PostMapping("/postimg")
+    public String print (@RequestParam("imgFile") MultipartFile img) throws IOException {
+        imgfile = img.getBytes();
+        contentType = img.getContentType();
+        return "Image Uploaded Sucessfully";
     }
+
 }

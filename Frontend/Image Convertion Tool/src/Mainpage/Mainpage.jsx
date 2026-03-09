@@ -2,12 +2,13 @@ import './Mainpage.css'
 import uploadpic from '../assets/uploadpic.png'
 import { useState } from 'react';
 
-function Mainpage({details,dataTrans}){
+function Mainpage({printImgInSpring ,message}){
     let [image , setImage] = useState(null);
     let [isDragging , setIsDragging] = useState(false);
     let [format , setFormat] = useState('png');
     let [initialName , setInitialName] = useState('Panda.jpg')
 
+    //Function used for Checking Format of image with Format to be converted
     function formatChecker(format){
         let initialFormat = initialName.split('.')[1].toUpperCase();
         if(format === initialFormat) {
@@ -16,6 +17,7 @@ function Mainpage({details,dataTrans}){
         }
     }
 
+    //Function to handle the Image file and Check the Size of File.
     function handleFile(file){
         if(!file.type.startsWith('image/')){
             alert("Please upload image format contents")
@@ -23,9 +25,10 @@ function Mainpage({details,dataTrans}){
         }
         if(file){
             if(Math.round((file.size) / 1000000) < 10.0){
-                setInitialName(file.name);
-                let imgurl = URL.createObjectURL(file);
-                setImage(imgurl);
+                // setInitialName(file.name);
+                // let imgurl = URL.createObjectURL(file);
+                // setImage(imgurl);
+                printImgInSpring(file);
             }
             else{
                 alert("Please upload file size below 10MB")
@@ -34,7 +37,7 @@ function Mainpage({details,dataTrans}){
         }
     }
 
-    function handleImg(event){
+    function handleImgOnUpload(event){
         let file = event.target.files[0];
         handleFile(file);
     }
@@ -71,7 +74,7 @@ function Mainpage({details,dataTrans}){
                     <label className={`upload-box ${isDragging ? "dragging" : "" }`} onDragOver={dragStarts} onDragEnd={dragEnds} onDrop={dragDrops}>
                         <img src={uploadpic} alt="" className='uploadimg' />
                          Drag & Drop or Click to Browse the images
-                        <input type="file" name="img" hidden onChange={(e) => handleImg(e)}/>
+                        <input type="file" name="img" hidden onChange={(e) => handleImgOnUpload(e)}/>
                         
                     </label>
                     
@@ -87,7 +90,7 @@ function Mainpage({details,dataTrans}){
 
                     <div className="middle-section">
 
-                        <p className="initial-name">{initialName[0].toUpperCase() + initialName.slice(1,initialName.length)}</p>
+                        <p className="initial-name">{initialName[0].toUpperCase() +  initialName.slice(1,initialName.length)}</p>
 
                         <p className="initial-format">{initialName?.split('.').pop()?.toUpperCase()}</p>
 
@@ -97,9 +100,8 @@ function Mainpage({details,dataTrans}){
                             <option value="ICO">ICO</option>
                             <option value="JPG">JPG</option>
                         </select>
-                        <button type="button"  className='convert-btn' onClick={() => {
+                        <button type="button"  className='convert-btn' onClick={(e) => {
                             formatChecker(format)
-                            dataTrans()
                         }}>Covert</button>
                     </div>
 
@@ -108,12 +110,8 @@ function Mainpage({details,dataTrans}){
                     </div>
                 </div>
 
-            </div>
+                <div><p>{message.data || message}</p></div>
 
-            <div>
-                <p>{details.name}</p>
-                <p>{details.designation}</p>
-                <p>{details.experience}</p>
             </div>
 
         </div>
