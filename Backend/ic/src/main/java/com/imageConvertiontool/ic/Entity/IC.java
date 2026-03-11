@@ -1,11 +1,14 @@
 package com.imageConvertiontool.ic.Entity;
 
 import jakarta.persistence.*;
+import lombok.Builder;
 import lombok.Data;
 import java.time.LocalDate;
 
-@Entity
 @Data
+@Builder
+@Entity
+
 public class IC {
 
     @Id
@@ -14,4 +17,5 @@ public class IC {
 
     String imageName;
     String imagePath;
+
 }

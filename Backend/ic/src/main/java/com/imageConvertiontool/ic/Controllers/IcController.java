@@ -17,13 +17,16 @@ public class IcController {
     @Autowired
     IcService icService;
 
-    byte[] imgfile ;
-    String contentType;
     @PostMapping("/postimg")
     public String print (@RequestParam("imgFile") MultipartFile img) throws IOException {
-        imgfile = img.getBytes();
-        contentType = img.getContentType();
-        return "Image Uploaded Sucessfully";
+        String name = img.getOriginalFilename();
+        try{
+            icService.saveImg(name , img);
+            return "Image Uploaded Sucessfully";
+        }
+        catch (Exception e){
+            return "Problem in Upload Of Image";
+        }
     }
 
 }
